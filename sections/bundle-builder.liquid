@@ -65,6 +65,7 @@
     data-section-id="{{ section.id }}"
     data-min-items="{{ min_items }}"
     data-max-items="{{ max_items }}"
+
     data-tiers='{{ tiers_json | strip_newlines }}'
     style="
       --padding-block-start: {{ section.settings.padding_block_start | default: 60 }}px;
@@ -72,6 +73,13 @@
       --bundle-columns-desktop: {{ section.settings.columns_desktop | default: 4 }};
     "
   >
+
+<div data-tier="2">2 items → 10% OFF</div>
+<div data-tier="4">4 items → 20% OFF</div>
+<div data-tier="6">6 items → 30% OFF</div>
+
+<div data-discount-badge></div>
+
     {%- comment -%} Header {%- endcomment -%}
     <div class="bundle-builder__header">
       {%- if section.settings.heading != blank -%}
