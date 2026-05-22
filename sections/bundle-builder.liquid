@@ -59,7 +59,7 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 
 <section class="section-{{ section.id }} color-{{ section.settings.color_scheme }}">
-  
+
   <bundle-builder-component
     class="bundle-builder"
     data-section-id="{{ section.id }}"
@@ -90,6 +90,8 @@
       <div class="bundle-tabs-wrapper" ref="tabsWrapper">
         <div class="bundle-tabs-track">
           <div class="bundle-tabs" ref="tabsContainer">
+            <button data-bundle-tab="series-1">Series 1</button>
+<button data-bundle-tab="series-2">Series 2</button>
             <button
               class="bundle-tabs__tab bundle-tabs__tab--active"
               ref="tabs[]"
@@ -281,12 +283,22 @@
             </div>
             <span class="bundle-summary__total-savings" ref="totalSavings" hidden></span>
           </div>
+          <button 
+  data-add-bundle
+  data-id="{{ product.id }}"
+  data-price="{{ product.price | money_without_currency }}">
+  Add to Bundle
+</button>
           <button
             class="bundle-summary__cta"
             ref="addToCartBtn"
             disabled
             on:click="/handleAddToCart"
           >
+          <div class="sticky-cart">
+  Items: <span data-bundle-count>0</span>
+  Total: <span data-bundle-total>$0.00</span>
+</div>
             {{ section.settings.cta_text | default: 'Add Bundle to Cart' }}
           </button>
         </div>

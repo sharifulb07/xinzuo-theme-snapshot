@@ -260,3 +260,41 @@ class BundleBuilderComponent extends Component {
 }
 
 customElements.define('bundle-builder-component', BundleBuilderComponent);
+
+
+
+let bundle = [];
+
+function updateStickyCart() {
+  const countEl = document.querySelector("[data-bundle-count]");
+  const totalEl = document.querySelector("[data-bundle-total]");
+
+  if (countEl) countEl.textContent = bundle.length;
+
+  const total = bundle.reduce((sum, item) => sum + item.price, 0);
+  if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
+}
+
+// Add product
+document.querySelectorAll("[data-add-bundle]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const product = {
+      id: btn.dataset.id,
+      price: parseFloat(btn.dataset.price)
+    };
+
+    bundle.push(product);
+    updateStickyCart();
+  });
+});
+
+// Remove product
+document.addEventListener("click", (e) => {
+  const removeBtn = e.target.closest("[data-remove-bundle]");
+  if (!removeBtn) return;
+
+  const id = removeBtn.dataset.id;
+  bundle = bundle.filter(item => item.id !== id);
+
+  updateStickyCart();
+});
