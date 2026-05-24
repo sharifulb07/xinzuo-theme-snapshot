@@ -17,7 +17,7 @@
       if swatch_count > 0
         assign variant_style = 'swatch'
       else
-        assign fieldset_id = section.id | append: '-' | append: product_resource.id | append: '-' | append: product_option.name | handleize
+        assign fieldset_id = safe_section.id | append: '-' | append: product_resource.id | append: '-' | append: product_option.name | handleize
         assign option_id_attribute = 'data-option-id="' | append: fieldset_id | append: '"'
         assign longest_value = 0
       endif
@@ -58,7 +58,7 @@
         >
           <input
             type="radio"
-            name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+            name="{{ product_option.name | escape }}-{{ safe_block.id }}-{{ product_resource.id }}"
             value="{{ product_option_value | escape }}"
             aria-label="{{ product_option_value.name }}"
             data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"

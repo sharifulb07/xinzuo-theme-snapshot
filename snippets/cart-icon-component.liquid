@@ -1,33 +1,57 @@
 {%- doc -%}
   Renders the cart icon, which displays the number of items in the cart via a bubble.
 {%- enddoc -%}
+
 <cart-icon
-  class="
-    header-actions__cart-icon
-    {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}
-  "
+  class="header-actions__cart-icon {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
   data-testid="cart-icon"
 >
-  <span
-    class="svg-wrapper"
-    aria-hidden="true"
-  >
-    {% comment %} {{ 'icon-cart.svg' | inline_asset_content }} {% endcomment %}
-    <img src="{{ 'ShoppingCartSimple.svg?v=1760489139' | file_url }}" width="100%" height="100%" alt="Shopping Cart">
+  <span class="svg-wrapper" aria-hidden="true">
+    {% if settings.icon_cart != blank %}
+      {{ settings.icon_cart | image_url: width: 22 | image_tag: 
+         width: 22, 
+         height: 22, 
+         class: 'icon icon-cart', 
+         alt: 'Cart' }}
+    {% else %}
+      <!-- Inline SVG Cart Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="8" cy="21" r="1"></circle>
+        <circle cx="19" cy="21" r="1"></circle>
+        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+      </svg>
+    {% endif %}
   </span>
 
   {% render 'cart-bubble', limit: 100, live_region: true, test_id: test_id %}
 </cart-icon>
 
 {% stylesheet %}
+  .svg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+  }
+
+  .svg-wrapper svg,
+  .svg-wrapper img {
+    width: 50%;
+    height: 50%;
+  }
+
+  /* Cart bubble adjustments */
   cart-icon:has(.cart-bubble__text-count:empty) {
     --cart-bubble-size: 10px;
-    --cart-bubble-top: 9px;
-    --cart-bubble-right: 9px;
+    --cart-bubble-top: 8px;
+    --cart-bubble-right: 8px;
+  }
 
+  @media screen and (max-width: 749px) {
     .svg-wrapper {
-      --cart-bubble-top: 4px;
-      --cart-bubble-right: 4px;
+      width: 20px;
+      height: 20px;
     }
   }
 {% endstylesheet %}

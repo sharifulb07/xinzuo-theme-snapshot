@@ -17,8 +17,10 @@
 <quantity-selector-component
   class="quantity-selector{% if class %} {{ class }}{% endif %}"
   {% if line_index == null %}
+    {% if block %}
     {{- block.shopify_attributes -}}
   {% endif %}
+{% endif %}
   ref="quantitySelectors[]"
 >
   <button

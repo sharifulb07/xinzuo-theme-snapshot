@@ -19,7 +19,10 @@
   <variant-picker
     class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }}"
     style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block_settings %}"
-    data-section-id="{{ section.id }}"
+   {% if section %}
+  data-section-id="{{ section.id }}"
+{% endif %}
+  
     data-product-id="{{ product_resource.id }}"
     data-block-id="{{ block.id }}"
     data-product-url="{{ product_resource.url }}"
@@ -47,7 +50,14 @@
           endif
 
           if variant_style == 'buttons' and settings.variant_button_width == 'equal-width-buttons'
-            assign fieldset_id = section.id | append: '-' | append: product_resource.id | append: '-' | append: product_option.name | handleize
+            {% assign fieldset_id = product_resource.id %}
+{% if section %}
+  {% assign fieldset_id = section.id | append: '-' | append: product_resource.id | append: '-' | append: product_option.name | handleize %}
+{% endif %}
+          
+         
+           
+           
             assign option_id_attribute = 'data-option-id="' | append: fieldset_id | append: '"'
             assign longest_value = 0
           endif
